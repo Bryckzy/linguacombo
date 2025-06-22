@@ -11,8 +11,8 @@ const Header: React.FC = () => {
     { href: '#idiomas', label: 'Idiomas' },
     { href: '#pacotes', label: 'Pacotes Promocionais' },
     { href: '#sobre', label: 'Quem Somos' },
-    { href: '#professores', label: 'Professor' },
-    { href: '#contato', label: 'Fale Conosco' },
+    // { href: '#professores', label: 'Professor' }, // Removed this link
+    // { href: '#contato', label: 'Fale Conosco' }, // Removed this link
   ];
 
   return (

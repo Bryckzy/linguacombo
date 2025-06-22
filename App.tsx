@@ -7,7 +7,7 @@ import PricingSection from './components/PricingSection';
 import PromotionalCombos from './components/PromotionalCombos';
 import AboutUs from './components/AboutUs';
 import TeacherSection from './components/TeacherSection'; // Added import
-import WhatsAppCTA from './components/WhatsAppCTA';
+// import WhatsAppCTA from './components/WhatsAppCTA'; // Removed import
 import Footer from './components/Footer';
 
 const App: React.FC = () => {
@@ -21,7 +21,7 @@ const App: React.FC = () => {
         <PromotionalCombos />
         <AboutUs />
         <TeacherSection /> {/* Added new section */}
-        <WhatsAppCTA />
+        {/* <WhatsAppCTA /> */} {/* Removed component */}
       </main>
       <Footer />
     </div>
