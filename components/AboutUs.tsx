@@ -5,11 +5,15 @@ const AboutUs: React.FC = () => {
     <section id="sobre" className="py-20 bg-white">
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row items-center">
-          <div className="md:w-1/2 mb-10 md:mb-0 md:pr-10">
+          <div className="md:w-1/2 mb-10 md:mb-0 md:pr-10 flex justify-center">
+            {/* 
+              IMPORTANTE: Substitua o URL abaixo pelo URL real da imagem que você deseja usar.
+              Este é um placeholder do Unsplash que se assemelha à imagem fornecida.
+            */}
             <img 
-              src="https://picsum.photos/600/400?random=1" 
-              alt="Pessoas aprendendo idiomas" 
-              className="rounded-xl shadow-2xl w-full"
+              src="https://images.unsplash.com/photo-1543269865-cbf427effbad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c3R1ZGVudCUyMGxhcHRvcCUyMGhlYWRwaG9uZXN8ZW58MHx8MHx8fDA%3D&w=1000&q=80" 
+              alt="Jovem mulher focada estudando online com fones de ouvido e laptop, representando o aprendizado moderno na Línguacombo." 
+              className="w-full max-w-md h-auto rounded-xl shadow-2xl object-cover aspect-[4/3]" 
             />
           </div>
           <div className="md:w-1/2">

@@ -1,14 +1,60 @@
 import React from 'react';
 import PricingCard from './PricingCard';
 
-const LanguageIcon: React.FC<{ path: string }> = ({ path }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-    <path strokeLinecap="round" strokeLinejoin="round" d={path} />
+// SVG component for the US flag (Corrected ID and star rendering)
+const USFlagIcon: React.FC<{ className?: string }> = ({ className }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 570 300" // Standard US flag aspect ratio is 1.9, using integers for easier math
+    className={className}
+    aria-hidden="true"
+    preserveAspectRatio="xMidYMid meet"
+  >
+    <defs>
+      {/* Star path corrected id and simplified for clarity if needed */}
+      <path id="us-star" d="M0,-4.7 L1.3826,-1.4485 L4.4721,-1.4485 L1.8041,0.5515 L2.618,3.9485 L0,2.2 L-2.618,3.9485 L-1.8041,0.5515 L-4.4721,-1.4485 L-1.3826,-1.4485 Z" fill="#FFFFFF" transform="scale(2.5)"/>
+    </defs>
+    {/* Stripes */}
+    <rect width="570" height="300" fill="#BF0A30"/> {/* Old Glory Red */}
+    <g fill="#FFFFFF">
+       <rect y={(300/13) * 1} width="570" height={300/13} />
+       <rect y={(300/13) * 3} width="570" height={300/13} />
+       <rect y={(300/13) * 5} width="570" height={300/13} />
+       <rect y={(300/13) * 7} width="570" height={300/13} />
+       <rect y={(300/13) * 9} width="570" height={300/13} />
+       <rect y={(300/13) * 11} width="570" height={300/13} />
+    </g>
+    {/* Canton (Blue Rectangle) */}
+    <rect width={570 * (2/5)} height={300 * (7/13)} fill="#002868"/> {/* Old Glory Blue */}
+    {/* Stars - 50 stars: 5 rows of 6, 4 rows of 5 */}
+    {Array.from({ length: 9 }).map((_, rowIndex) => (
+      Array.from({ length: rowIndex % 2 === 0 ? 6 : 5 }).map((_, colIndex) => {
+        const cantonWidth = 570 * (2/5);
+        const cantonHeight = 300 * (7/13);
+        const xOffset = cantonWidth / 12;
+        const yOffset = cantonHeight / 10;
+        const x = xOffset + (colIndex * 2 * xOffset) + (rowIndex % 2 === 1 ? xOffset : 0);
+        const y = yOffset + (rowIndex * yOffset);
+        return <use key={`star_${rowIndex}_${colIndex}`} href="#us-star" transform={`translate(${x}, ${y})`}/>;
+      })
+    ))}
   </svg>
 );
 
-const EnglishIcon = () => <LanguageIcon path="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />;
-const FrenchIcon = () => <LanguageIcon path="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />;
+// SVG component for the French flag
+const FrenchFlagIcon: React.FC<{ className?: string }> = ({ className }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 900 600" // Aspect ratio 3:2
+    className={className}
+    aria-hidden="true"
+    preserveAspectRatio="xMidYMid meet"
+  >
+    <rect width="300" height="600" fill="#002654" /> {/* Blue */}
+    <rect x="300" width="300" height="600" fill="#FFFFFF" /> {/* White */}
+    <rect x="600" width="300" height="600" fill="#ED2939" /> {/* Red */}
+  </svg>
+);
 
 const PricingSection: React.FC = () => {
   return (
@@ -20,16 +66,16 @@ const PricingSection: React.FC = () => {
         <p className="text-center text-gray-600 mb-12 text-lg">
           Escolha seu idioma e comece a aprender hoje mesmo.
         </p>
-        <div className="flex flex-wrap justify-center items-stretch">
+        <div className="flex flex-wrap justify-center items-stretch gap-x-8 gap-y-12">
           <PricingCard
             language="Inglês Divertido"
             description="Aulas dinâmicas para você destravar a fala e ganhar confiança no inglês."
-            icon={<EnglishIcon />}
+            icon={<USFlagIcon className="w-16 h-16 md:w-20 md:h-20" />}
           />
           <PricingCard
             language="Francês Charmant"
             description="Descubra a beleza da língua francesa com aulas focadas na conversação e cultura."
-            icon={<FrenchIcon />}
+            icon={<FrenchFlagIcon className="w-16 h-16 md:w-20 md:h-20" />}
           />
         </div>
       </div>

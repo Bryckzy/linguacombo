@@ -1,18 +1,21 @@
+
 import React from 'react';
 
-// Icon for CheckMark
-const CheckMarkIcon: React.FC<{ className?: string }> = ({ className }) => (
-    <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-    </svg>
+// New SVG for "Pro" list items
+const ListItemCheckIcon: React.FC<{ className?: string }> = ({ className }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
 );
 
-// Icon for CrossMark
-const CrossMarkIcon: React.FC<{ className?: string }> = ({ className }) => (
-    <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-        <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-    </svg>
+// New SVG for "Con" list items
+const ListItemCrossIcon: React.FC<{ className?: string }> = ({ className }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 6L6 18" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M6 6L18 18" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
 );
+
 
 const ComboComparison: React.FC = () => {
   const traditionalPoints = [
@@ -39,20 +42,25 @@ const ComboComparison: React.FC = () => {
         <div className="bg-combo-red rounded-xl shadow-2xl p-6 md:p-10">
           <div className="flex flex-col md:flex-row items-stretch justify-around gap-6 md:gap-8">
             {/* Coluna 1: Combo Tradicional */}
-            <div className="flex flex-col items-center text-center md:w-[45%] lg:w-2/5 p-4 sm:p-6 rounded-lg bg-red-700/80 shadow-inner ring-1 ring-red-600/50">
-              {/* FastFoodIcon removed */}
-              <div className="h-28 w-28 md:h-32 md:w-32 mb-5"></div> {/* Placeholder for spacing */}
+            <div className="group flex flex-col items-center text-center md:w-[45%] lg:w-2/5 p-4 sm:p-6 rounded-lg bg-red-800 shadow-inner ring-1 ring-red-700/50">
+              <img 
+                src="https://wallpapers.com/images/high/fast-food-meal-combo-9ttyt2ht7usti3dy.png" 
+                alt="Combo de fast food com hambúrguer, batatas fritas e refrigerante" 
+                className="w-full max-w-[180px] md:max-w-[220px] h-auto object-cover aspect-[4/3] rounded-lg mx-auto mb-6 transform group-hover:scale-105 transition-transform duration-300 shadow-md"
+              />
               <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">COMBO TRADICIONAL</h3>
               <p className="text-3xl md:text-4xl font-extrabold text-combo-yellow mb-5">R$ 25</p>
               <ul className="space-y-3 text-left w-full max-w-sm">
                 {traditionalPoints.map((point, index) => (
-                  <li key={index} className={`flex items-start p-2.5 rounded-md shadow-sm ${point.type === 'pro' ? 'bg-yellow-400/30 ring-1 ring-yellow-500/50' : 'bg-red-400/30 ring-1 ring-red-500/50'}`}>
-                    {point.type === 'pro' ? (
-                      <CheckMarkIcon className="h-5 w-5 text-combo-yellow mr-2.5 mt-0.5 flex-shrink-0" />
-                    ) : (
-                      <CrossMarkIcon className="h-5 w-5 text-red-300 mr-2.5 mt-0.5 flex-shrink-0" />
-                    )}
-                    <span className={`text-sm md:text-base ${point.type === 'pro' ? 'text-gray-100 font-medium' : 'text-gray-200'}`}>{point.text}</span>
+                  <li key={index} className="flex items-start p-2.5 rounded-md border border-white/20 shadow-sm">
+                    <span className="mr-2.5 flex-shrink-0 mt-1"> {/* Adjusted mt for better alignment */}
+                      {point.type === 'pro' ? (
+                        <ListItemCheckIcon className="w-5 h-5 text-green-400" />
+                      ) : (
+                        <ListItemCrossIcon className="w-5 h-5 text-yellow-400" /> // Using combo-yellow for "cons" for thematic consistency
+                      )}
+                    </span>
+                    <span className="text-sm md:text-base text-gray-100 font-medium">{point.text}</span>
                   </li>
                 ))}
               </ul>
@@ -64,9 +72,12 @@ const ComboComparison: React.FC = () => {
             </div>
 
             {/* Coluna 2: Linguacombo */}
-            <div className="flex flex-col items-center text-center md:w-[45%] lg:w-2/5 p-4 sm:p-6 rounded-lg bg-red-700/80 shadow-inner ring-1 ring-red-600/50">
-              {/* BookIcon removed */}
-              <div className="h-28 w-28 md:h-32 md:w-32 mb-5"></div> {/* Placeholder for spacing */}
+            <div className="group flex flex-col items-center text-center md:w-[45%] lg:w-2/5 p-4 sm:p-6 rounded-lg bg-red-800 shadow-inner ring-1 ring-red-700/50">
+              <img 
+                src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=300&q=80" 
+                alt="Pilha de livros representando estudo de idiomas" 
+                className="w-full max-w-[180px] md:max-w-[220px] h-auto object-cover aspect-[4/3] rounded-lg mx-auto mb-6 transform group-hover:scale-105 transition-transform duration-300 shadow-md"
+              />
               <h3 className="text-2xl md:text-3xl font-bold text-white mb-1">
                 <span className="text-combo-yellow">LÍNGUA</span>COMBO
               </h3>
@@ -74,9 +85,17 @@ const ComboComparison: React.FC = () => {
               <p className="text-3xl md:text-4xl font-extrabold text-combo-yellow mb-5">R$ 25<span className="text-lg text-yellow-300">/30min</span></p>
               <ul className="space-y-3 text-left w-full max-w-sm">
                 {linguacomboPoints.map((point, index) => (
-                  <li key={index} className={`flex items-start p-2.5 rounded-md shadow-sm ${point.type === 'pro' ? 'bg-green-400/30 ring-1 ring-green-500/50' : 'bg-red-400/30 ring-1 ring-red-500/50'}`}>
-                    <CheckMarkIcon className="h-5 w-5 text-green-300 mr-2.5 mt-0.5 flex-shrink-0" />
-                    <span className={`text-sm md:text-base ${point.type === 'pro' ? 'text-gray-100 font-medium' : 'text-gray-200'}`}>{point.text}</span>
+                  <li key={index} className="flex items-start p-2.5 rounded-md border border-white/20 shadow-sm">
+                     <span className="mr-2.5 flex-shrink-0 mt-1"> {/* Adjusted mt for better alignment */}
+                       {/* All linguacombo points are "pro" but maintaining structure for consistency */}
+                      {point.type === 'pro' ? (
+                        <ListItemCheckIcon className="w-5 h-5 text-green-400" />
+                      ) : (
+                        // This case might not be hit if all points are 'pro'
+                        <ListItemCrossIcon className="w-5 h-5 text-combo-red" /> 
+                      )}
+                    </span>
+                    <span className="text-sm md:text-base text-gray-100 font-medium">{point.text}</span>
                   </li>
                 ))}
               </ul>

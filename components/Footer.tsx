@@ -29,6 +29,9 @@ const Footer: React.FC = () => {
         <p className="text-xs text-gray-400 mt-1">
           Preços e promoções sujeitos a alteração sem aviso prévio. Imagens meramente ilustrativas.
         </p>
+        <p className="text-xs text-gray-400 mt-1">
+          Línguacombo é uma empresa do grupo Quark IT.
+        </p>
       </div>
     </footer>
   );
