@@ -1,8 +1,7 @@
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import ComboPackageCard from './ComboPackageCard';
-import ChevronLeftIcon from './icons/ChevronLeftIcon';
-import ChevronRightIcon from './icons/ChevronRightIcon';
+// Chevron icons are no longer imported as buttons are removed.
 
 const packagesData = [
   {
@@ -46,7 +45,7 @@ const packagesData = [
 ];
 
 const PromotionalCombos: React.FC = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  // currentIndex state is removed
   const carouselTrackRef = useRef<HTMLDivElement>(null);
   const isDraggingRef = useRef(false);
   const dragStartXRef = useRef(0);
@@ -57,7 +56,7 @@ const PromotionalCombos: React.FC = () => {
 
   const applyTransformToCenterCard = useCallback((targetCardIndex: number, smooth: boolean = true) => {
     const track = carouselTrackRef.current;
-    const viewport = track?.parentElement; // The div with overflow-hidden
+    const viewport = track?.parentElement; 
 
     if (!track || !viewport || !track.children || track.children.length === 0) return;
 
@@ -75,12 +74,10 @@ const PromotionalCombos: React.FC = () => {
     let finalTranslateX: number;
 
     if (trackScrollWidth <= viewportWidth) {
-      // Content is smaller than or fits viewport. Center the whole track.
       finalTranslateX = (viewportWidth - trackScrollWidth) / 2;
     } else {
-      // Content is larger, apply scrolling with boundaries
-      const minNegativeScroll = -(trackScrollWidth - viewportWidth); // Max scroll left
-      finalTranslateX = Math.max(minNegativeScroll, Math.min(0, desiredTranslateXToCenter)); // Clamp between 0 and max scroll left
+      const minNegativeScroll = -(trackScrollWidth - viewportWidth); 
+      finalTranslateX = Math.max(minNegativeScroll, Math.min(0, desiredTranslateXToCenter)); 
     }
     
     if (smooth) {
@@ -94,27 +91,32 @@ const PromotionalCombos: React.FC = () => {
 
 
   useEffect(() => {
-    applyTransformToCenterCard(currentIndex, true);
-  }, [currentIndex, applyTransformToCenterCard]);
-
-  useEffect(() => {
     const track = carouselTrackRef.current;
     if (!track) return;
 
+    const setInitialPosition = () => {
+        if (carouselTrackRef.current && carouselTrackRef.current.children.length > 0) {
+            // Attempt to center the first card or position track at the start.
+            applyTransformToCenterCard(0, false);
+        } else if (carouselTrackRef.current) { 
+            carouselTrackRef.current.style.transform = `translateX(0px)`;
+            currentTranslateXRef.current = 0;
+        }
+    };
+
     const handleResize = () => {
-        applyTransformToCenterCard(currentIndex, false); 
+        setInitialPosition();
     };
 
     window.addEventListener('resize', handleResize);
-    // Initial call after component mounts and refs are set
-    const timeoutId = setTimeout(() => applyTransformToCenterCard(currentIndex, false), 0);
+    const timeoutId = setTimeout(setInitialPosition, 0);
 
 
     return () => {
       clearTimeout(timeoutId);
       window.removeEventListener('resize', handleResize);
     };
-  }, [currentIndex, applyTransformToCenterCard]); 
+  }, [applyTransformToCenterCard]); 
 
 
   const handleDragStart = (event: Event) => {
@@ -129,7 +131,7 @@ const PromotionalCombos: React.FC = () => {
         carouselTrackRef.current.style.transition = 'none';
         carouselTrackRef.current.style.cursor = 'grabbing';
     }
-    document.body.style.userSelect = 'none'; // Prevent text selection during drag
+    document.body.style.userSelect = 'none'; 
   };
 
   const handleDragMove = (event: Event) => {
@@ -138,18 +140,16 @@ const PromotionalCombos: React.FC = () => {
     if (!(event instanceof MouseEvent || event instanceof TouchEvent)) return;
     const e = event;
     
-    // Prevent page scroll on touch devices when dragging horizontally
     if (e instanceof TouchEvent && e.cancelable) {
         e.preventDefault();
     }
-
 
     const currentX = 'touches' in e ? e.touches[0].clientX : e.clientX;
     const deltaX = currentX - dragStartXRef.current;
     let newTranslateX = trackStartTranslateXRef.current + deltaX;
 
     const track = carouselTrackRef.current;
-    const viewport = track.parentElement; // The overflow-hidden div
+    const viewport = track.parentElement; 
     if (track && viewport) {
         const trackScrollWidth = track.scrollWidth;
         const viewportWidth = viewport.clientWidth;
@@ -159,10 +159,8 @@ const PromotionalCombos: React.FC = () => {
 
         if (trackScrollWidth <= viewportWidth) {
              const centeredPosition = (viewportWidth - trackScrollWidth) / 2;
-             // Allow slight drag around center for smaller content
              newTranslateX = Math.max(centeredPosition - 30, Math.min(centeredPosition + 30, newTranslateX)); 
         } else {
-            // Allow slight overscroll (rubber band effect)
             newTranslateX = Math.max(minNegativeTranslate - 50, Math.min(maxPositiveTranslate + 50, newTranslateX));
         }
         track.style.transform = `translateX(${newTranslateX}px)`;
@@ -189,9 +187,8 @@ const PromotionalCombos: React.FC = () => {
         let minNegativeTranslate = -(trackScrollWidth - viewportWidth);
         
         if (trackScrollWidth <= viewportWidth) {
-            finalTranslateX = (viewportWidth - trackScrollWidth) / 2; // Snap to center
+            finalTranslateX = (viewportWidth - trackScrollWidth) / 2; 
         } else {
-            // Snap to bounds if overscrolled
             finalTranslateX = Math.max(minNegativeTranslate, Math.min(maxPositiveTranslate, finalTranslateX));
         }
 
@@ -204,15 +201,15 @@ const PromotionalCombos: React.FC = () => {
   useEffect(() => {
     const track = carouselTrackRef.current;
     if (track) {
-      // Use non-passive for touchmove to allow preventDefault
+      const touchStartOptions: AddEventListenerOptions = { passive: true };
       const touchMoveOptions: AddEventListenerOptions = { passive: false };
 
       track.addEventListener('mousedown', handleDragStart);
       window.addEventListener('mousemove', handleDragMove);
       window.addEventListener('mouseup', handleDragEnd);
-      window.addEventListener('mouseleave', handleDragEnd); // End drag if mouse leaves window
+      window.addEventListener('mouseleave', handleDragEnd); 
 
-      track.addEventListener('touchstart', handleDragStart, { passive: true });
+      track.addEventListener('touchstart', handleDragStart, touchStartOptions);
       track.addEventListener('touchmove', handleDragMove, touchMoveOptions);
       track.addEventListener('touchend', handleDragEnd);
       track.addEventListener('touchcancel', handleDragEnd);
@@ -223,23 +220,15 @@ const PromotionalCombos: React.FC = () => {
         window.removeEventListener('mouseup',handleDragEnd);
         window.removeEventListener('mouseleave', handleDragEnd);
 
-        track.removeEventListener('touchstart', handleDragStart, { passive: true });
+        track.removeEventListener('touchstart', handleDragStart, touchStartOptions);
         track.removeEventListener('touchmove', handleDragMove, touchMoveOptions);
         track.removeEventListener('touchend', handleDragEnd);
         track.removeEventListener('touchcancel', handleDragEnd);
       };
     }
-  }, []); // Empty dependency array means this runs once on mount and cleans up on unmount
+  }, []); 
 
-
-  const handlePrev = () => {
-    setCurrentIndex(prev => Math.max(0, prev - 1));
-  };
-
-  const handleNext = () => {
-    setCurrentIndex(prev => Math.min(numItems - 1, prev + 1));
-  };
-
+  // handlePrev and handleNext functions are removed
 
   return (
     <section className="py-20 md:py-24 bg-white dark:bg-gray-950 transition-colors duration-300">
@@ -252,19 +241,18 @@ const PromotionalCombos: React.FC = () => {
         </p>
       </div>
       
-      <div className="container mx-auto px-0 sm:px-6 relative group"> {/* Added group for button visibility on hover */}
+      {/* Removed 'group' class as buttons are gone */}
+      <div className="container mx-auto px-0 sm:px-6 relative"> 
         <div 
           className="overflow-hidden cursor-grab active:cursor-grabbing relative"
         > 
-          {/* Left Fade */}
           <div className="absolute inset-y-0 left-0 w-12 sm:w-16 md:w-20 bg-gradient-to-r from-white dark:from-gray-950 to-transparent z-10 pointer-events-none" aria-hidden="true"></div>
-          {/* Right Fade */}
           <div className="absolute inset-y-0 right-0 w-12 sm:w-16 md:w-20 bg-gradient-to-l from-white dark:from-gray-950 to-transparent z-10 pointer-events-none" aria-hidden="true"></div>
 
           <div
             ref={carouselTrackRef}
-            className="flex gap-6 md:gap-8 py-8 px-3 sm:px-0" // px-3 ensures cards near edges are not cut off by fade initially
-            style={{ touchAction: 'pan-y' }} // Allows vertical scroll while capturing horizontal pan
+            className="flex gap-6 md:gap-8 py-8 px-3 sm:px-0" 
+            style={{ touchAction: 'pan-y' }} 
           >
             {packagesData.map((pkg, index) => (
               <div
@@ -280,32 +268,17 @@ const PromotionalCombos: React.FC = () => {
             ))}
           </div>
         </div>
+        
+        {/* Navigation Buttons are removed */}
 
-        {/* Navigation Buttons - visible on group hover or focus */}
-        {numItems > 1 && (
-        <>
-          <button
-            onClick={handlePrev}
-            disabled={currentIndex === 0}
-            className="absolute left-1 sm:left-2 md:left-3 top-1/2 -translate-y-1/2 z-20 p-2 sm:p-3 bg-combo-red/80 dark:bg-red-700/80 hover:bg-combo-red/100 dark:hover:bg-red-700/100 text-combo-yellow dark:text-yellow-300 rounded-full shadow-lg transition-all duration-300 opacity-0 group-hover:opacity-100 focus-within:opacity-100 focus:opacity-100 disabled:opacity-30 disabled:cursor-not-allowed"
-            aria-label="Pacote anterior"
-          >
-            <ChevronLeftIcon className="w-5 h-5 sm:w-6 sm:h-6" />
-          </button>
-          <button
-            onClick={handleNext}
-            disabled={currentIndex === numItems - 1}
-            className="absolute right-1 sm:right-2 md:right-3 top-1/2 -translate-y-1/2 z-20 p-2 sm:p-3 bg-combo-red/80 dark:bg-red-700/80 hover:bg-combo-red/100 dark:hover:bg-red-700/100 text-combo-yellow dark:text-yellow-300 rounded-full shadow-lg transition-all duration-300 opacity-0 group-hover:opacity-100 focus-within:opacity-100 focus:opacity-100 disabled:opacity-30 disabled:cursor-not-allowed"
-            aria-label="Próximo pacote"
-          >
-            <ChevronRightIcon className="w-5 h-5 sm:w-6 sm:h-6" />
-          </button>
-        </>
-        )}
+        {/* Textual hint for draggability */}
+        <p className="text-center text-xs sm:text-sm text-gray-500 dark:text-gray-400 mt-4 px-3 sm:px-0">
+          <span className="inline-block mr-1" aria-hidden="true">↔️</span> Arraste para explorar os pacotes
+        </p>
       </div>
       
       <div className="container mx-auto px-6">
-        <p className="text-center text-gray-500 dark:text-gray-400 text-sm mt-10">
+        <p className="text-center text-gray-500 dark:text-gray-400 text-sm mt-8"> {/* Adjusted mt if necessary, or keep as is */}
             Todos os pacotes podem ser utilizados para aulas de Inglês ou Francês. Aulas de 30 minutos.
         </p>
       </div>
