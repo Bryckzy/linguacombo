@@ -31,6 +31,10 @@
       .modal-open {
         overflow: hidden; /* Prevent background scroll when modal is open */
       }
+      /* Adjust scroll position for anchor links to account for sticky header */
+      [id] {
+        scroll-margin-top: 80px; /* Adjust this value based on your sticky header's actual height */
+      }
     </style>
 <script type="importmap">
 {
@@ -47,6 +51,7 @@
 </head>
 <body class="bg-gray-50">
     <div id="root"></div>
+    <div id="modal-root"></div> <!-- Added modal root for portal -->
     <script type="module" src="/index.tsx"></script>
 </body>
 </html>

@@ -72,35 +72,37 @@ const LeadCaptureModal: React.FC<LeadCaptureModalProps> = ({
   const modalRootRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    if (!modalRootRef.current) {
-        let element = document.getElementById('modal-root');
-        if (!element) {
-            element = document.createElement('div');
-            element.id = 'modal-root';
-            document.body.appendChild(element);
-        }
-        modalRootRef.current = element;
+    // Ensure modal-root div exists for the portal
+    let element = document.getElementById('modal-root');
+    if (!element) {
+        element = document.createElement('div');
+        element.id = 'modal-root';
+        document.body.appendChild(element);
     }
+    modalRootRef.current = element;
 
-    let initialCursoSelection = '';
-    if (initialCursoValue) {
-        const lowerInitialCurso = initialCursoValue.toLowerCase();
-        if (lowerInitialCurso.includes('inglês')) {
-            initialCursoSelection = 'Inglês';
-        } else if (lowerInitialCurso.includes('francês')) {
-            initialCursoSelection = 'Francês';
+    // Reset form state when modal opens or initial values change
+    if (isOpen) {
+        let initialCursoSelection = '';
+        if (initialCursoValue) {
+            const lowerInitialCurso = initialCursoValue.toLowerCase();
+            if (lowerInitialCurso.includes('inglês')) {
+                initialCursoSelection = 'Inglês';
+            } else if (lowerInitialCurso.includes('francês')) {
+                initialCursoSelection = 'Francês';
+            }
         }
+        setFormData({
+            nome: '',
+            email: '',
+            whatsappUserInput: '',
+            curso: initialCursoSelection,
+            plano: defaultPlano || '',
+            observacao: '',
+        });
+        setError(null);
+        setSuccessMessage(null);
     }
-    setFormData({
-        nome: '',
-        email: '',
-        whatsappUserInput: '',
-        curso: initialCursoSelection,
-        plano: defaultPlano || '',
-        observacao: '',
-    });
-    setError(null);
-    setSuccessMessage(null);
   }, [initialCursoValue, defaultPlano, isOpen]);
 
   useEffect(() => {
@@ -193,8 +195,8 @@ const LeadCaptureModal: React.FC<LeadCaptureModalProps> = ({
     e.preventDefault();
     if (!validateForm()) return;
     if (!supabase) {
-      setError("Falha na conexão com o serviço de dados. Tente novamente mais tarde.");
-      console.error("Supabase client is not initialized.");
+      setError("Falha na conexão com o serviço de dados. Verifique se as variáveis de ambiente SUPABASE_URL e SUPABASE_ANON_KEY estão configuradas corretamente. Tente novamente mais tarde.");
+      console.error("Supabase client is not initialized. Ensure SUPABASE_URL and SUPABASE_ANON_KEY environment variables are set.");
       return;
     }
 
@@ -236,12 +238,13 @@ const LeadCaptureModal: React.FC<LeadCaptureModalProps> = ({
       setSuccessMessage('Informações enviadas! Você será redirecionado para o WhatsApp em instantes...');
       setTimeout(() => {
         onSubmitSuccess(submissionData);
+        // Do not call onClose() here directly; let onSubmitSuccess handle it if needed, or parent.
       }, 2000);
 
     } catch (err: any) {
       console.error('Supabase submission error:', err);
       setError(
-        `Ocorreu um erro ao enviar seus dados: ${err.message || 'Verifique sua conexão'}. Tente novamente.`
+        `Ocorreu um erro ao enviar seus dados: ${err.message || 'Verifique sua conexão e as configurações do Supabase (tabela, RLS)'}. Tente novamente.`
       );
     } finally {
       setIsLoading(false);
@@ -254,12 +257,12 @@ const LeadCaptureModal: React.FC<LeadCaptureModalProps> = ({
       role="dialog"
       aria-modal="true"
       aria-labelledby="lead-modal-title"
-      onClick={onClose}
+      onClick={onClose} // Click on backdrop closes modal
     >
       <div
         ref={modalRef}
         className="bg-white p-6 md:p-8 rounded-xl shadow-2xl w-full max-w-xl relative border-2 border-gray-300"
-        onClick={(e) => e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()} // Click inside modal content does not close
       >
         <button
           onClick={onClose}
