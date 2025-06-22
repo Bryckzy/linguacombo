@@ -193,8 +193,8 @@ const LeadCaptureModal: React.FC<LeadCaptureModalProps> = ({
     e.preventDefault();
     if (!validateForm()) return;
     if (!supabase) {
-      setError("Falha na conexão com o serviço de dados. Verifique se as variáveis de ambiente SUPABASE_URL e SUPABASE_ANON_KEY estão configuradas corretamente. Tente novamente mais tarde.");
-      console.error("Supabase client is not initialized. Ensure SUPABASE_URL and SUPABASE_ANON_KEY environment variables are set.");
+      setError("Falha na conexão com o serviço de dados. Verifique se as variáveis de ambiente VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY estão configuradas corretamente. Tente novamente mais tarde.");
+      console.error("Supabase client is not initialized. Ensure VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY environment variables are set.");
       return;
     }
 
