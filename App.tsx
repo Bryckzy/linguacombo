@@ -4,9 +4,10 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import ComboComparison from './components/ComboComparison';
 import PricingSection from './components/PricingSection';
-import PromotionalCombos from './components/PromotionalCombos'; // Added import
+import PromotionalCombos from './components/PromotionalCombos';
 import AboutUs from './components/AboutUs';
-import WhatsAppCTA from './components/WhatsAppCTA'; // Changed from ContactForm
+import TeacherSection from './components/TeacherSection'; // Added import
+import WhatsAppCTA from './components/WhatsAppCTA';
 import Footer from './components/Footer';
 
 const App: React.FC = () => {
@@ -17,9 +18,10 @@ const App: React.FC = () => {
         <Hero />
         <ComboComparison />
         <PricingSection />
-        <PromotionalCombos /> {/* Added new section */}
+        <PromotionalCombos />
         <AboutUs />
-        <WhatsAppCTA /> {/* Changed from ContactForm */}
+        <TeacherSection /> {/* Added new section */}
+        <WhatsAppCTA />
       </main>
       <Footer />
     </div>

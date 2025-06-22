@@ -14,31 +14,32 @@ interface LeadCaptureModalProps {
 export interface LeadFormData {
   nome: string;
   email: string;
-  whatsapp: string; // Will store the raw digits, e.g., 11987654321
+  whatsapp: string; 
   curso: string;
   plano?: string;
   observacao: string;
   origem: string;
 }
 
-// SVG Icons for inputs
+// SVG Icons for inputs - these will inherit text color or be explicitly set
 const UserIcon: React.FC = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
     <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
   </svg>
 );
 
 const EmailIcon: React.FC = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
     <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
   </svg>
 );
 
-const WhatsAppIcon: React.FC = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
+const WhatsAppIconSVG: React.FC = () => ( // Renamed to avoid conflict with imported WhatsAppIcon
+  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400 dark:text-gray-500" fill="currentColor" viewBox="0 0 24 24">
     <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.173.2-.297.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.47.074-.742.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.206 5.077 4.487.709.306 1.262.489 1.694.626.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.289.173-1.413z"/>
   </svg>
 );
+
 
 const LeadCaptureModal: React.FC<LeadCaptureModalProps> = ({
   isOpen,
@@ -51,7 +52,7 @@ const LeadCaptureModal: React.FC<LeadCaptureModalProps> = ({
   const [formData, setFormData] = useState<{
     nome: string;
     email: string;
-    whatsappUserInput: string; // Stores formatted number for display
+    whatsappUserInput: string;
     curso: string;
     plano: string;
     observacao: string;
@@ -207,7 +208,7 @@ const LeadCaptureModal: React.FC<LeadCaptureModalProps> = ({
     const submissionData: LeadFormData = {
         nome: formData.nome,
         email: formData.email,
-        whatsapp: cleanedWhatsApp, // Use raw digits
+        whatsapp: cleanedWhatsApp,
         curso: formData.curso,
         plano: formData.plano || undefined,
         observacao: formData.observacao,
@@ -250,7 +251,7 @@ const LeadCaptureModal: React.FC<LeadCaptureModalProps> = ({
 
   const modalContent = (
     <div
-      className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-[100]"
+      className="fixed inset-0 bg-black bg-opacity-80 dark:bg-opacity-90 flex items-center justify-center p-4 z-[100] transition-opacity duration-300"
       role="dialog"
       aria-modal="true"
       aria-labelledby="lead-modal-title"
@@ -258,43 +259,43 @@ const LeadCaptureModal: React.FC<LeadCaptureModalProps> = ({
     >
       <div
         ref={modalRef}
-        className="bg-white p-5 md:p-6 rounded-xl shadow-2xl w-full max-w-md relative border-2 border-gray-300" // Adjusted max-w-xl to max-w-md, p-6 md:p-8 to p-5 md:p-6
+        className="bg-white dark:bg-gray-800 p-5 md:p-6 rounded-xl shadow-2xl w-full max-w-md relative border-2 border-gray-300 dark:border-gray-700 transition-colors duration-300"
         onClick={(e) => e.stopPropagation()}
       >
         <button
           onClick={onClose}
-          className="absolute top-2.5 right-2.5 text-gray-400 hover:text-gray-600 transition-colors rounded-full p-1 focus:outline-none focus:ring-2 focus:ring-gray-400" // Adjusted top-3 right-3 to top-2.5 right-2.5, p-1.5 to p-1
+          className="absolute top-2.5 right-2.5 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 transition-colors rounded-full p-1 focus:outline-none focus:ring-2 focus:ring-gray-400 dark:focus:ring-gray-500"
           aria-label="Fechar modal"
         >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg> {/* Adjusted w-7 h-7 to w-6 h-6 */}
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
 
-        <h2 id="lead-modal-title" className="text-2xl md:text-3xl font-bold text-combo-red mb-2 text-center"> {/* Adjusted text-3xl md:text-4xl to text-2xl md:text-3xl, mb-3 to mb-2 */}
+        <h2 id="lead-modal-title" className="text-2xl md:text-3xl font-bold text-combo-red dark:text-red-500 mb-2 text-center">
           Só mais um passo!
         </h2>
-        <p className="text-gray-700 mb-6 text-sm md:text-base text-center"> {/* Adjusted text-base md:text-lg to text-sm md:text-base, mb-8 to mb-6 */}
+        <p className="text-gray-700 dark:text-gray-300 mb-6 text-sm md:text-base text-center">
           Preencha abaixo para falarmos diretamente pelo WhatsApp.
         </p>
 
         {error && (
-          <div className="mb-4 p-2.5 bg-red-50 text-red-700 border border-red-200 rounded-lg text-sm shadow-sm"> {/* Adjusted mb-5 to mb-4, p-3 to p-2.5 */}
+          <div className="mb-4 p-2.5 bg-red-50 dark:bg-red-900/40 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-700/50 rounded-lg text-sm shadow-sm">
             {error}
           </div>
         )}
         {successMessage && (
-          <div className="mb-4 p-2.5 bg-green-50 text-green-700 border border-green-200 rounded-lg text-sm shadow-sm"> {/* Adjusted mb-5 to mb-4, p-3 to p-2.5 */}
+          <div className="mb-4 p-2.5 bg-green-50 dark:bg-green-900/40 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-700/50 rounded-lg text-sm shadow-sm">
             {successMessage}
           </div>
         )}
 
         {!successMessage && (
-          <form onSubmit={handleSubmit} className="space-y-4"> {/* Adjusted space-y-5 to space-y-4 */}
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="nome" className="block text-sm font-semibold text-gray-800 mb-1"> {/* Adjusted mb-1.5 to mb-1 */}
-                Nome Completo <span className="text-combo-red">*</span>
+              <label htmlFor="nome" className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1">
+                Nome Completo <span className="text-combo-red dark:text-red-500">*</span>
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"> {/* Adjusted pl-3.5 to pl-3 */}
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <UserIcon />
                 </div>
                 <input
@@ -304,18 +305,18 @@ const LeadCaptureModal: React.FC<LeadCaptureModalProps> = ({
                   ref={firstInputRef}
                   value={formData.nome}
                   onChange={handleChange}
-                  className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-combo-red focus:border-combo-red text-base text-gray-900 transition-colors bg-white focus:bg-white placeholder-gray-500" // Adjusted pl-12 to pl-10, py-3 to py-2.5
+                  className="w-full pl-10 pr-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:ring-2 focus:ring-combo-red dark:focus:ring-red-500 focus:border-combo-red dark:focus:border-red-500 text-base text-gray-900 dark:text-white transition-colors bg-white dark:bg-gray-700 focus:bg-white dark:focus:bg-gray-700 placeholder-gray-500 dark:placeholder-gray-400"
                   placeholder="Seu nome completo"
                   required
                 />
               </div>
             </div>
             <div>
-              <label htmlFor="email" className="block text-sm font-semibold text-gray-800 mb-1"> {/* Adjusted mb-1.5 to mb-1 */}
-                Email <span className="text-combo-red">*</span>
+              <label htmlFor="email" className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1">
+                Email <span className="text-combo-red dark:text-red-500">*</span>
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"> {/* Adjusted pl-3.5 to pl-3 */}
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <EmailIcon />
                 </div>
                 <input
@@ -324,19 +325,19 @@ const LeadCaptureModal: React.FC<LeadCaptureModalProps> = ({
                   id="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-combo-red focus:border-combo-red text-base text-gray-900 transition-colors bg-white focus:bg-white placeholder-gray-500" // Adjusted pl-12 to pl-10, py-3 to py-2.5
+                  className="w-full pl-10 pr-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:ring-2 focus:ring-combo-red dark:focus:ring-red-500 focus:border-combo-red dark:focus:border-red-500 text-base text-gray-900 dark:text-white transition-colors bg-white dark:bg-gray-700 focus:bg-white dark:focus:bg-gray-700 placeholder-gray-500 dark:placeholder-gray-400"
                   placeholder="seu.email@exemplo.com"
                   required
                 />
               </div>
             </div>
             <div>
-              <label htmlFor="whatsappUserInput" className="block text-sm font-semibold text-gray-800 mb-1"> {/* Adjusted mb-1.5 to mb-1 */}
-                WhatsApp <span className="text-combo-red">*</span>
+              <label htmlFor="whatsappUserInput" className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1">
+                WhatsApp <span className="text-combo-red dark:text-red-500">*</span>
               </label>
               <div className="relative">
-                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"> {/* Adjusted pl-3.5 to pl-3 */}
-                  <WhatsAppIcon />
+                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <WhatsAppIconSVG />
                 </div>
                 <input
                   type="tel"
@@ -344,7 +345,7 @@ const LeadCaptureModal: React.FC<LeadCaptureModalProps> = ({
                   id="whatsappUserInput"
                   value={formData.whatsappUserInput}
                   onChange={handleChange}
-                  className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-combo-red focus:border-combo-red text-base text-gray-900 transition-colors bg-white focus:bg-white placeholder-gray-500" // Adjusted pl-12 to pl-10, py-3 to py-2.5
+                  className="w-full pl-10 pr-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:ring-2 focus:ring-combo-red dark:focus:ring-red-500 focus:border-combo-red dark:focus:border-red-500 text-base text-gray-900 dark:text-white transition-colors bg-white dark:bg-gray-700 focus:bg-white dark:focus:bg-gray-700 placeholder-gray-500 dark:placeholder-gray-400"
                   placeholder="(XX) XXXXX-XXXX"
                   maxLength={15}
                   required
@@ -352,15 +353,15 @@ const LeadCaptureModal: React.FC<LeadCaptureModalProps> = ({
               </div>
             </div>
              <div>
-              <label htmlFor="curso" className="block text-sm font-semibold text-gray-800 mb-1"> {/* Adjusted mb-1.5 to mb-1 */}
-                Idioma de Interesse <span className="text-combo-red">*</span>
+              <label htmlFor="curso" className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1">
+                Idioma de Interesse <span className="text-combo-red dark:text-red-500">*</span>
               </label>
               <select
                 name="curso"
                 id="curso"
                 value={formData.curso}
                 onChange={handleChange}
-                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-combo-red focus:border-combo-red text-base text-gray-900 transition-colors bg-white focus:bg-white" // Adjusted py-3 to py-2.5
+                className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:ring-2 focus:ring-combo-red dark:focus:ring-red-500 focus:border-combo-red dark:focus:border-red-500 text-base text-gray-900 dark:text-white transition-colors bg-white dark:bg-gray-700 focus:bg-white dark:focus:bg-gray-700"
                 required
               >
                 <option value="" disabled>Selecione o idioma...</option>
@@ -369,8 +370,8 @@ const LeadCaptureModal: React.FC<LeadCaptureModalProps> = ({
               </select>
             </div>
             <div>
-              <label htmlFor="observacao" className="block text-sm font-semibold text-gray-800 mb-1"> {/* Adjusted mb-1.5 to mb-1 */}
-                Observação <span className="text-gray-500 text-xs">(Opcional)</span>
+              <label htmlFor="observacao" className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-1">
+                Observação <span className="text-gray-500 dark:text-gray-400 text-xs">(Opcional)</span>
               </label>
               <textarea
                 name="observacao"
@@ -378,14 +379,14 @@ const LeadCaptureModal: React.FC<LeadCaptureModalProps> = ({
                 value={formData.observacao}
                 onChange={handleChange}
                 rows={2}
-                className="w-full px-4 py-2.5 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-combo-red focus:border-combo-red text-base text-gray-900 transition-colors bg-white focus:bg-white placeholder-gray-500" // Adjusted py-3 to py-2.5
+                className="w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:ring-2 focus:ring-combo-red dark:focus:ring-red-500 focus:border-combo-red dark:focus:border-red-500 text-base text-gray-900 dark:text-white transition-colors bg-white dark:bg-gray-700 focus:bg-white dark:focus:bg-gray-700 placeholder-gray-500 dark:placeholder-gray-400"
                 placeholder="Alguma informação adicional..."
               />
             </div>
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-combo-red text-white font-semibold py-3 px-4 rounded-lg shadow-md hover:bg-red-700 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-red-400 disabled:opacity-70 disabled:cursor-not-allowed text-base" // Adjusted py-3.5 to py-3, text-lg to text-base
+              className="w-full bg-combo-red dark:bg-red-600 text-white dark:text-gray-100 font-semibold py-3 px-4 rounded-lg shadow-md hover:bg-red-700 dark:hover:bg-red-500 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-red-400 dark:focus:ring-red-500 disabled:opacity-70 disabled:cursor-not-allowed text-base"
             >
               {isLoading ? (
                 <div className="flex items-center justify-center">
@@ -401,7 +402,7 @@ const LeadCaptureModal: React.FC<LeadCaptureModalProps> = ({
             </button>
           </form>
         )}
-         <p className="text-xs text-gray-600 mt-5 text-center"> {/* Adjusted mt-6 to mt-5 */}
+         <p className="text-xs text-gray-600 dark:text-gray-400 mt-5 text-center">
             Seus dados estão protegidos. Usaremos apenas para o contato sobre nossos cursos.
           </p>
       </div>

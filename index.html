@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
+        darkMode: 'class', // Enabled class strategy for dark mode
         theme: {
           extend: {
             colors: {
@@ -33,7 +34,7 @@
       }
       /* Adjust scroll position for anchor links to account for sticky header */
       [id] {
-        scroll-margin-top: 96px; /* Increased from 80px. Header is ~68px. Adjust as needed. */
+        scroll-margin-top: 72px; /* Adjusted from 96px. Header is ~68-72px. */
       }
     </style>
 <script type="importmap">
@@ -49,7 +50,7 @@
 </script>
 <link rel="stylesheet" href="/index.css">
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
     <div id="root"></div>
     <div id="modal-root"></div> <!-- Added modal root for portal -->
     <script type="module" src="/index.tsx"></script>
