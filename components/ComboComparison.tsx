@@ -52,7 +52,7 @@ const ComboComparison: React.FC = () => {
               <p className="text-3xl md:text-4xl font-extrabold text-combo-yellow mb-6">R$ 25</p>
               <ul className="space-y-3 text-left w-full max-w-xs sm:max-w-sm mx-auto">
                 {traditionalPoints.map((point, index) => (
-                  <li key={index} className="flex items-start p-5 rounded-xl bg-red-700 border border-white/40 shadow-lg">
+                  <li key={index} className="flex items-start p-3 rounded-md bg-red-700/60 border border-white/20 shadow-sm">
                     <span className="mr-3 flex-shrink-0 mt-0.5">
                       {point.type === 'pro' ? (
                         <ListItemCheckIcon className="w-5 h-5 text-green-300" />
@@ -85,7 +85,7 @@ const ComboComparison: React.FC = () => {
               <p className="text-3xl md:text-4xl font-extrabold text-combo-yellow mb-6">R$ 25<span className="text-xl text-yellow-200">/aula</span></p>
               <ul className="space-y-3 text-left w-full max-w-xs sm:max-w-sm mx-auto">
                 {linguacomboPoints.map((point, index) => (
-                  <li key={index} className="flex items-start p-5 rounded-xl bg-red-700 border border-white/40 shadow-lg">
+                  <li key={index} className="flex items-start p-3 rounded-md bg-red-700/60 border border-white/20 shadow-sm">
                      <span className="mr-3 flex-shrink-0 mt-0.5">
                       {point.type === 'pro' ? (
                         <ListItemCheckIcon className="w-5 h-5 text-green-300" />
