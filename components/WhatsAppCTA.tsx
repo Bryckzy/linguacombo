@@ -25,9 +25,9 @@ const WhatsAppCTA: React.FC = () => {
 
   return (
     <>
-      <section id="contato" className="py-20 md:py-24 bg-combo-yellow dark:bg-yellow-500 transition-colors duration-300">
+      <section className="py-20 md:py-24 bg-combo-yellow dark:bg-yellow-500 transition-colors duration-300">
         <div className="container mx-auto px-6 text-center">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-combo-red dark:text-red-700 mb-6 leading-tight max-w-2xl mx-auto">
+          <h2 id="contato" className="text-4xl md:text-5xl font-extrabold text-combo-red dark:text-red-700 mb-6 leading-tight max-w-2xl mx-auto">
             Pronto para Transformar Seu Futuro com Novos Idiomas?
           </h2>
           <p className="text-xl md:text-2xl text-gray-800 dark:text-gray-900 mb-12 max-w-3xl mx-auto">

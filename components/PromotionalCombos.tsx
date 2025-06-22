@@ -1,4 +1,5 @@
 
+
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import ComboPackageCard from './ComboPackageCard';
 
@@ -125,7 +126,7 @@ const PromotionalCombos: React.FC = () => {
     };
 
     window.addEventListener('resize', handleResize);
-    applyTransform(currentIndex, false);
+    applyTransform(currentIndex, false); // Apply initial transform without animation
 
     return () => {
       window.removeEventListener('resize', handleResize);
@@ -194,6 +195,7 @@ const PromotionalCombos: React.FC = () => {
         carouselTrackRef.current.style.cursor = 'grab';
     }
     document.body.style.userSelect = '';
+    // No snap logic, carousel stays where dragged.
   };
 
   useEffect(() => {
@@ -223,9 +225,9 @@ const PromotionalCombos: React.FC = () => {
 
 
   return (
-    <section id="pacotes" className="py-20 md:py-24 bg-white dark:bg-gray-950 transition-colors duration-300">
+    <section className="py-20 md:py-24 bg-white dark:bg-gray-950 transition-colors duration-300">
       <div className="container mx-auto px-6">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-center text-gray-800 dark:text-gray-100 mb-4">
+        <h2 id="pacotes" className="text-4xl md:text-5xl font-extrabold text-center text-gray-800 dark:text-gray-100 mb-4">
           Turbine Seu Aprendizado com Nossos <span className="text-combo-red dark:text-red-500">Pacotes Campeões</span>!
         </h2>
         <p className="text-center text-gray-600 dark:text-gray-300 text-lg md:text-xl mb-16 max-w-3xl mx-auto">

@@ -2,7 +2,7 @@ import React from 'react';
 
 const Hero: React.FC = () => {
   return (
-    <section id="hero" className="bg-combo-yellow dark:bg-yellow-500 text-center py-24 md:py-32 px-6 relative overflow-hidden transition-colors duration-300">
+    <section className="bg-combo-yellow dark:bg-yellow-500 text-center py-24 md:py-32 px-6 relative overflow-hidden transition-colors duration-300">
       <div className="absolute inset-0 opacity-10 dark:opacity-5">
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
           <defs>
@@ -14,7 +14,7 @@ const Hero: React.FC = () => {
         </svg>
       </div>
       <div className="relative z-10 max-w-3xl mx-auto">
-        <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-combo-red dark:text-red-700 mb-6 leading-tight">
+        <h1 id="hero" className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-combo-red dark:text-red-700 mb-6 leading-tight">
           Desbloqueie Seu Potencial Bilíngue!
         </h1>
         <p className="text-xl md:text-2xl text-gray-800 dark:text-gray-900 mb-10">

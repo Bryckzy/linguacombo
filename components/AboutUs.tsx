@@ -2,7 +2,7 @@ import React from 'react';
 
 const AboutUs: React.FC = () => {
   return (
-    <section id="sobre" className="py-20 md:py-24 bg-white dark:bg-gray-900 transition-colors duration-300">
+    <section className="py-20 md:py-24 bg-white dark:bg-gray-900 transition-colors duration-300">
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16">
           <div className="md:w-1/2 flex justify-center md:order-last">
@@ -13,7 +13,7 @@ const AboutUs: React.FC = () => {
             />
           </div>
           <div className="md:w-1/2 md:order-first">
-            <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800 dark:text-gray-100 mb-8 tracking-tight">
+            <h2 id="sobre" className="text-4xl md:text-5xl font-extrabold text-gray-800 dark:text-gray-100 mb-8 tracking-tight">
               Nossa Paixão: <span className="text-combo-red dark:text-red-500">Conectar Você ao Mundo</span>
             </h2>
             <p className="text-gray-700 dark:text-gray-300 text-lg mb-6 leading-relaxed">

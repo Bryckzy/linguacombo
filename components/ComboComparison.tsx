@@ -33,9 +33,9 @@ const ComboComparison: React.FC = () => {
   ];
 
   return (
-    <section id="comparacao" className="py-20 md:py-24 bg-gray-100 dark:bg-gray-800 transition-colors duration-300">
+    <section className="py-20 md:py-24 bg-gray-100 dark:bg-gray-800 transition-colors duration-300">
       <div className="container mx-auto px-4 md:px-6">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-center text-gray-800 dark:text-gray-100 mb-12 md:mb-16">
+        <h2 id="comparacao" className="text-4xl md:text-5xl font-extrabold text-center text-gray-800 dark:text-gray-100 mb-12 md:mb-16">
           Sua Escolha Inteligente: <span className="text-combo-red dark:text-red-500">O Que Alimenta Seu Futuro?</span>
         </h2>
 

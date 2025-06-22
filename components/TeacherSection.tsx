@@ -7,9 +7,9 @@ const TeacherSection: React.FC = () => {
   const biography = "Com experiência prática no ensino de idiomas, incluindo um ano em uma edtech de inglês onde observei de perto o que realmente acelera o aprendizado, minha paixão é ajudar você a destravar o idioma. Utilizo métodos diretos e personalizados, com a solidez da minha certificação de proficiência pela Cambridge, para que você ganhe confiança e fluência de forma acessível.";
 
   return (
-    <section id="professores" className="bg-gray-50 dark:bg-slate-900 py-20 md:py-24 transition-colors duration-300">
+    <section className="bg-gray-50 dark:bg-slate-900 py-20 md:py-24 transition-colors duration-300">
       <div className="container mx-auto px-6">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-center text-gray-800 dark:text-gray-100 mb-12 md:mb-16">
+        <h2 id="professores" className="text-4xl md:text-5xl font-extrabold text-center text-gray-800 dark:text-gray-100 mb-12 md:mb-16">
           Conheça Seu <span className="text-combo-red dark:text-red-500">Professor</span>
         </h2>
         <div className="flex flex-col md:flex-row items-center md:items-start gap-10 md:gap-12 max-w-4xl mx-auto bg-white dark:bg-gray-800 p-8 md:p-10 rounded-xl shadow-xl dark:shadow-lg dark:shadow-black/30 border border-gray-200 dark:border-gray-700">

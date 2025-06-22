@@ -27,6 +27,7 @@
     <style>
       html {
         scroll-behavior: smooth;
+        overflow-y: scroll; /* Sempre mostrar a track da barra de rolagem para evitar salto de layout */
       }
       /* For Modal a11y focus trapping */
       .modal-open {
@@ -34,7 +35,7 @@
       }
       /* Adjust scroll position for anchor links to account for sticky header */
       [id] {
-        scroll-margin-top: 72px; /* Adjusted from 96px. Header is ~68-72px. */
+        scroll-margin-top: 84px; /* Header height (~68px) + desired gap (~16px) */
       }
     </style>
 <script type="importmap">

@@ -57,9 +57,9 @@ const FrenchFlagIcon: React.FC<{ className?: string }> = ({ className }) => (
 
 const PricingSection: React.FC = () => {
   return (
-    <section id="idiomas" className="py-20 md:py-24 bg-gray-50 dark:bg-slate-900 transition-colors duration-300">
+    <section className="py-20 md:py-24 bg-gray-50 dark:bg-slate-900 transition-colors duration-300">
       <div className="container mx-auto px-6">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-center text-gray-800 dark:text-gray-100 mb-4">
+        <h2 id="idiomas" className="text-4xl md:text-5xl font-extrabold text-center text-gray-800 dark:text-gray-100 mb-4">
           Nossos Idiomas <span className="text-combo-red dark:text-red-500">em Destaque</span>!
         </h2>
         <p className="text-center text-gray-600 dark:text-gray-300 text-lg md:text-xl mb-16 max-w-2xl mx-auto">
