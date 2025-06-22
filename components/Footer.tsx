@@ -30,9 +30,11 @@ const Footer: React.FC = () => {
             Instagram
           </a>
           <a 
-            href="#" 
+            href="https://www.linkedin.com/in/leonardo-brykcy/" 
+            target="_blank" 
+            rel="noopener noreferrer" 
             className="text-gray-200 hover:text-combo-yellow transition-colors duration-300 text-sm hover:scale-110 transform"
-            aria-label="Perfil da Línguacombo no LinkedIn (Link pendente)"
+            aria-label="Perfil da Línguacombo no LinkedIn"
           >
             LinkedIn
           </a>
@@ -45,6 +47,9 @@ const Footer: React.FC = () => {
         </p>
         <p className="text-xs text-gray-400 mt-1">
           Línguacombo é uma marca do grupo Quark IT.
+        </p>
+        <p className="text-xs text-gray-400 mt-2">
+          Formas de Pagamento: Aceitamos Cartão de Crédito e PIX.
         </p>
       </div>
     </footer>
