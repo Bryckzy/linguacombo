@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
-import SunIcon from './icons/SunIcon';
-import MoonIcon from './icons/MoonIcon';
+import ThemeToggleButton from './ThemeToggleButton'; // Import the new toggle button
 
 // Simple SVG Menu Icon (Hamburger)
 const MenuIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
@@ -18,7 +17,7 @@ const CloseIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
 );
 
 const Header: React.FC = () => {
-  const { theme, toggleTheme } = useTheme();
+  const { theme } = useTheme(); // toggleTheme is now handled by ThemeToggleButton
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
@@ -54,7 +53,7 @@ const Header: React.FC = () => {
     };
 
     if (isMenuOpen) {
-      document.body.style.overflow = 'hidden'; // Prevent background scroll when mobile menu is open
+      document.body.style.overflow = 'hidden'; 
       document.addEventListener('mousedown', handleClickOutside);
     } else {
       document.body.style.overflow = '';
@@ -71,7 +70,7 @@ const Header: React.FC = () => {
   };
 
   const handleNavLinkClick = () => {
-    setIsMenuOpen(false); // Close menu when a link is clicked
+    setIsMenuOpen(false); 
   };
 
   const headerBaseClasses = "sticky top-0 z-50 transition-all duration-300";
@@ -98,13 +97,9 @@ const Header: React.FC = () => {
                 {link.label}
               </a>
             ))}
-            <button
-              onClick={toggleTheme}
-              className="ml-4 p-2 rounded-full text-combo-yellow dark:text-yellow-400 hover:bg-red-600 dark:hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-combo-yellow dark:focus:ring-yellow-500 transition-all duration-300"
-              aria-label={theme === 'dark' ? 'Ativar modo claro' : 'Ativar modo escuro'}
-            >
-              {theme === 'dark' ? <SunIcon className="w-5 h-5" /> : <MoonIcon className="w-5 h-5" />}
-            </button>
+            <div className="ml-4"> {/* Wrapper for positioning */}
+              <ThemeToggleButton />
+            </div>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -135,7 +130,6 @@ const Header: React.FC = () => {
         aria-labelledby="mobile-menu-title"
       >
         <div className={`absolute top-0 left-0 w-full ${headerDynamicClasses} px-6 flex justify-between items-center h-[${isScrolled ? '60px' : '68px'}]`}>
-            {/* This div is to push content below the replicated header height inside the menu, if needed for title, or just use padding-top on the content below */}
              <h2 id="mobile-menu-title" className="text-xl font-bold text-combo-yellow dark:text-yellow-400 sr-only">Menu Principal</h2>
         </div>
         
@@ -150,14 +144,13 @@ const Header: React.FC = () => {
               {link.label}
             </a>
           ))}
-          <button
-            onClick={() => { toggleTheme(); handleNavLinkClick();}}
-            className="mt-6 w-full flex items-center justify-center p-3 rounded-lg text-combo-yellow dark:text-yellow-400 bg-red-600 dark:bg-red-900 hover:bg-red-500 dark:hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-combo-yellow dark:focus:ring-yellow-500 transition-all duration-300"
-            aria-label={theme === 'dark' ? 'Ativar modo claro' : 'Ativar modo escuro'}
-          >
-            {theme === 'dark' ? <SunIcon className="w-6 h-6 mr-2" /> : <MoonIcon className="w-6 h-6 mr-2" />}
-            <span className="text-white dark:text-gray-200 font-semibold">{theme === 'dark' ? 'Modo Claro' : 'Modo Escuro'}</span>
-          </button>
+          {/* Theme Toggle Row in Mobile Menu */}
+          <div className="mt-6 w-full flex items-center justify-between p-3 rounded-lg bg-red-600 dark:bg-red-900">
+            <span className="font-semibold text-white dark:text-gray-200 select-none">
+              {theme === 'dark' ? 'Modo Claro' : 'Modo Escuro'}
+            </span>
+            <ThemeToggleButton onToggleCallback={handleNavLinkClick} />
+          </div>
         </nav>
       </div>
       {/* Overlay for background when menu is open */}
