@@ -32,7 +32,7 @@ const PricingCard: React.FC<PricingCardProps> = ({ language, description, icon }
 
   return (
     <>
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl dark:shadow-xl dark:shadow-yellow-700/20 p-8 md:p-10 flex flex-col items-center transform hover:scale-105 transition-all duration-300 border-4 border-combo-yellow dark:border-yellow-500 w-full min-w-[300px] max-w-md hover:shadow-yellow-400/50 dark:hover:shadow-yellow-600/40">
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl dark:shadow-xl dark:shadow-yellow-700/20 p-8 md:p-10 flex flex-col items-center transform hover:scale-105 transition-all duration-300 border-4 border-combo-yellow dark:border-yellow-500 w-full min-w-[270px] max-w-md hover:shadow-yellow-400/50 dark:hover:shadow-yellow-600/40">
         <div className="text-combo-red dark:text-red-500 mb-6 h-20 flex items-center justify-center">{icon}</div>
         <h3 className="text-3xl lg:text-4xl font-bold text-combo-red dark:text-red-500 mb-4 text-center tracking-tight">{language}</h3>
         <p className="text-gray-600 dark:text-gray-300 text-center mb-8 h-24 text-base md:text-lg leading-relaxed">{description}</p>

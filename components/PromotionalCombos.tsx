@@ -246,8 +246,8 @@ const PromotionalCombos: React.FC = () => {
         <div 
           className="overflow-hidden cursor-grab active:cursor-grabbing relative"
         > 
-          <div className="absolute inset-y-0 left-0 w-12 sm:w-16 md:w-20 bg-gradient-to-r from-white dark:from-gray-950 to-transparent z-10 pointer-events-none" aria-hidden="true"></div>
-          <div className="absolute inset-y-0 right-0 w-12 sm:w-16 md:w-20 bg-gradient-to-l from-white dark:from-gray-950 to-transparent z-10 pointer-events-none" aria-hidden="true"></div>
+          <div className="absolute inset-y-0 left-0 w-8 sm:w-12 md:w-16 bg-gradient-to-r from-white dark:from-gray-950 to-transparent z-10 pointer-events-none" aria-hidden="true"></div>
+          <div className="absolute inset-y-0 right-0 w-8 sm:w-12 md:w-16 bg-gradient-to-l from-white dark:from-gray-950 to-transparent z-10 pointer-events-none" aria-hidden="true"></div>
 
           <div
             ref={carouselTrackRef}
@@ -257,7 +257,7 @@ const PromotionalCombos: React.FC = () => {
             {packagesData.map((pkg, index) => (
               <div
                 key={index}
-                className="min-w-[280px] w-[calc(80%-1.5rem)] sm:min-w-[300px] sm:w-[330px] md:w-[360px] lg:w-[380px] flex-shrink-0 flex"
+                className="min-w-[270px] w-[270px] sm:min-w-[300px] sm:w-[300px] md:min-w-[320px] md:w-[320px] lg:min-w-[340px] lg:w-[340px] xl:min-w-[360px] xl:w-[360px] flex-shrink-0 flex"
                 role="group"
                 aria-roledescription="slide"
                 aria-label={`Pacote ${index + 1} de ${packagesData.length}: ${pkg.name}`}

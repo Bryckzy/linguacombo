@@ -1,65 +1,174 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import SunIcon from './icons/SunIcon';
 import MoonIcon from './icons/MoonIcon';
 
+// Simple SVG Menu Icon (Hamburger)
+const MenuIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+  </svg>
+);
+
+// Simple SVG Close Icon (X)
+const CloseIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" {...props}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+  </svg>
+);
+
 const Header: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const mobileMenuButtonRef = useRef<HTMLButtonElement>(null);
+
   const navLinks = [
     { href: '#hero', label: 'Início' },
     { href: '#comparacao', label: 'Compare & Escolha' },
     { href: '#idiomas', label: 'Idiomas' },
     { href: '#pacotes', label: 'Pacotes Promocionais' },
     { href: '#sobre', label: 'Quem Somos' },
-    // { href: '#professores', label: 'Professor' }, // Removed this link
-    // { href: '#contato', label: 'Fale Conosco' }, // Removed this link
   ];
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        isMenuOpen &&
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(event.target as Node) &&
+        mobileMenuButtonRef.current &&
+        !mobileMenuButtonRef.current.contains(event.target as Node)
+      ) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden'; // Prevent background scroll when mobile menu is open
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isMenuOpen]);
+  
+  const toggleMobileMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleNavLinkClick = () => {
+    setIsMenuOpen(false); // Close menu when a link is clicked
+  };
+
+  const headerBaseClasses = "sticky top-0 z-50 transition-all duration-300";
+  const headerDynamicClasses = isScrolled
+    ? "bg-red-700 dark:bg-red-800 shadow-xl py-3"
+    : "bg-combo-red dark:bg-red-700 shadow-lg py-4";
+
   return (
-    <header className="bg-combo-red dark:bg-red-700 shadow-lg sticky top-0 z-50 transition-colors duration-300">
-      <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-        <a href="#hero" className="text-3xl font-extrabold text-combo-yellow dark:text-yellow-400 tracking-tight">
-          Língua<span className="text-white dark:text-gray-200">combo</span>
-        </a>
-        <nav className="hidden md:flex items-center space-x-1 lg:space-x-2">
-          {navLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="text-white dark:text-gray-200 hover:text-combo-yellow dark:hover:text-yellow-400 transition-colors duration-300 font-semibold px-2 py-1 text-sm lg:text-base rounded-md hover:bg-red-600 dark:hover:bg-red-800"
-            >
-              {link.label}
-            </a>
-          ))}
-           <button
-            onClick={toggleTheme}
-            className="ml-4 p-2 rounded-full text-combo-yellow dark:text-yellow-400 hover:bg-red-600 dark:hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-combo-yellow dark:focus:ring-yellow-500 transition-all duration-300"
-            aria-label={theme === 'dark' ? 'Ativar modo claro' : 'Ativar modo escuro'}
-          >
-            {theme === 'dark' ? <SunIcon className="w-5 h-5" /> : <MoonIcon className="w-5 h-5" />}
-          </button>
-        </nav>
-        {/* Basic Mobile Menu (can be improved with a proper hamburger icon and dropdown) */}
-        <div className="md:hidden flex items-center">
-            <select 
-                onChange={(e) => window.location.href = e.target.value} 
-                className="bg-combo-red dark:bg-red-700 text-white dark:text-gray-200 p-2 rounded focus:outline-none focus:ring-2 focus:ring-combo-yellow dark:focus:ring-yellow-500"
-                aria-label="Navegação Principal"
-            >
-                {navLinks.map(link => (
-                    <option key={link.href} value={link.href}>{link.label}</option>
-                ))}
-            </select>
+    <>
+      <header className={`${headerBaseClasses} ${headerDynamicClasses}`}>
+        <div className="container mx-auto px-6 flex justify-between items-center">
+          <a href="#hero" className="text-3xl font-extrabold text-combo-yellow dark:text-yellow-400 tracking-tight" onClick={handleNavLinkClick}>
+            Língua<span className="text-white dark:text-gray-200">combo</span>
+          </a>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-1 lg:space-x-2">
+            {navLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                className="text-white dark:text-gray-200 hover:text-combo-yellow dark:hover:text-yellow-400 transition-colors duration-300 font-semibold px-2 py-1 text-sm lg:text-base rounded-md hover:bg-red-600 dark:hover:bg-red-800"
+              >
+                {link.label}
+              </a>
+            ))}
             <button
               onClick={toggleTheme}
-              className="ml-3 p-2 rounded-full text-combo-yellow dark:text-yellow-400 hover:bg-red-600 dark:hover:bg-red-800 focus:outline-none focus:ring-1 focus:ring-combo-yellow dark:focus:ring-yellow-500 transition-all duration-300"
+              className="ml-4 p-2 rounded-full text-combo-yellow dark:text-yellow-400 hover:bg-red-600 dark:hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-combo-yellow dark:focus:ring-yellow-500 transition-all duration-300"
               aria-label={theme === 'dark' ? 'Ativar modo claro' : 'Ativar modo escuro'}
             >
               {theme === 'dark' ? <SunIcon className="w-5 h-5" /> : <MoonIcon className="w-5 h-5" />}
             </button>
+          </nav>
+
+          {/* Mobile Menu Button */}
+          <div className="md:hidden flex items-center">
+            <button
+              ref={mobileMenuButtonRef}
+              onClick={toggleMobileMenu}
+              className="p-2 rounded-md text-combo-yellow dark:text-yellow-400 hover:bg-red-600 dark:hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-combo-yellow dark:focus:ring-yellow-500 transition-colors duration-300"
+              aria-label={isMenuOpen ? "Fechar menu de navegação" : "Abrir menu de navegação"}
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-menu-drawer"
+            >
+              {isMenuOpen ? <CloseIcon className="w-7 h-7" /> : <MenuIcon className="w-7 h-7" />}
+            </button>
+          </div>
         </div>
+      </header>
+
+      {/* Mobile Menu Drawer */}
+      <div
+        id="mobile-menu-drawer"
+        ref={mobileMenuRef}
+        className={`md:hidden fixed top-0 right-0 h-full w-full max-w-xs bg-combo-red dark:bg-red-800 shadow-2xl p-6 pt-[${isScrolled ? '60px' : '68px'}] transform transition-transform duration-300 ease-in-out z-40 ${
+          isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="mobile-menu-title"
+      >
+        <div className={`absolute top-0 left-0 w-full ${headerDynamicClasses} px-6 flex justify-between items-center h-[${isScrolled ? '60px' : '68px'}]`}>
+            {/* This div is to push content below the replicated header height inside the menu, if needed for title, or just use padding-top on the content below */}
+             <h2 id="mobile-menu-title" className="text-xl font-bold text-combo-yellow dark:text-yellow-400 sr-only">Menu Principal</h2>
+        </div>
+        
+        <nav className="flex flex-col space-y-5 mt-8">
+          {navLinks.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              className="text-white dark:text-gray-200 hover:text-combo-yellow dark:hover:text-yellow-400 transition-colors duration-300 font-semibold text-lg py-2 rounded-md text-center"
+              onClick={handleNavLinkClick}
+            >
+              {link.label}
+            </a>
+          ))}
+          <button
+            onClick={() => { toggleTheme(); handleNavLinkClick();}}
+            className="mt-6 w-full flex items-center justify-center p-3 rounded-lg text-combo-yellow dark:text-yellow-400 bg-red-600 dark:bg-red-900 hover:bg-red-500 dark:hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-combo-yellow dark:focus:ring-yellow-500 transition-all duration-300"
+            aria-label={theme === 'dark' ? 'Ativar modo claro' : 'Ativar modo escuro'}
+          >
+            {theme === 'dark' ? <SunIcon className="w-6 h-6 mr-2" /> : <MoonIcon className="w-6 h-6 mr-2" />}
+            <span className="text-white dark:text-gray-200 font-semibold">{theme === 'dark' ? 'Modo Claro' : 'Modo Escuro'}</span>
+          </button>
+        </nav>
       </div>
-    </header>
+      {/* Overlay for background when menu is open */}
+      {isMenuOpen && (
+        <div 
+          className="md:hidden fixed inset-0 bg-black/50 dark:bg-black/70 z-30 backdrop-blur-sm" 
+          onClick={toggleMobileMenu}
+          aria-hidden="true"
+        ></div>
+      )}
+    </>
   );
 };
 

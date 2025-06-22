@@ -30,13 +30,22 @@
         scroll-behavior: smooth;
         overflow-y: scroll; /* Sempre mostrar a track da barra de rolagem para evitar salto de layout */
       }
+      body {
+        overflow-x: hidden; /* Prevent horizontal scroll */
+      }
       /* For Modal a11y focus trapping */
       .modal-open {
         overflow: hidden; /* Prevent background scroll when modal is open */
       }
       /* Adjust scroll position for anchor links to account for sticky header */
+      /* Max header height is py-4 (1rem top, 1rem bottom) + font size. ~68px. Scrolled height py-3.
+         Using a slightly larger value for scroll-margin-top to ensure content isn't hidden.
+         Initial: 2rem (py-4) + line-height of logo. Let's aim for around 80-90px.
+         Header is about 68px (py-4) or 60px (py-3). Add ~16px gap. So 84px / 76px.
+         Let's stick to 84px to be safe.
+      */
       [id] {
-        scroll-margin-top: 84px; /* Header height (~68px) + desired gap (~16px) */
+        scroll-margin-top: 90px; /* Increased slightly to ensure content visibility with dynamic header */
       }
     </style>
 <script type="importmap">
