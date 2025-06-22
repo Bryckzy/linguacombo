@@ -2,10 +2,11 @@
 import React from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import ComboComparison from './components/ComboComparison'; // New import
+import ComboComparison from './components/ComboComparison';
 import PricingSection from './components/PricingSection';
+import PromotionalCombos from './components/PromotionalCombos'; // Added import
 import AboutUs from './components/AboutUs';
-import ContactForm from './components/ContactForm';
+import WhatsAppCTA from './components/WhatsAppCTA'; // Changed from ContactForm
 import Footer from './components/Footer';
 
 const App: React.FC = () => {
@@ -14,10 +15,11 @@ const App: React.FC = () => {
       <Header />
       <main className="flex-grow">
         <Hero />
-        <ComboComparison /> {/* New component added here */}
+        <ComboComparison />
         <PricingSection />
+        <PromotionalCombos /> {/* Added new section */}
         <AboutUs />
-        <ContactForm />
+        <WhatsAppCTA /> {/* Changed from ContactForm */}
       </main>
       <Footer />
     </div>
